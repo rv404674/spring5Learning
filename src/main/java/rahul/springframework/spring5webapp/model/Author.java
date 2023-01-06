@@ -1,20 +1,40 @@
 package rahul.springframework.spring5webapp.model;
 
+
+import jakarta.persistence.*;
+
 import java.util.Set;
 
+@Entity
 public class Author {
+    // Auto basically means underlying db, will provide the generation of
+    // id.
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     private String firstName;
     private String lastName;
+
+    @ManyToMany(mappedBy = "authors")
     private Set<Book> books;
 
     // NOTE: JPA requires empty constructor
     public Author(){
-
     }
+
 
     public Author(String lastName, Set<Book> books) {
         this.lastName = lastName;
         this.books = books;
+    }
+
+    public Long getId(){
+        return id;
+    }
+
+    public void setId(Long id){
+        this.id = id;
     }
 
     public String getFirstName() {
